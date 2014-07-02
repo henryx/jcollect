@@ -16,7 +16,7 @@ import org.apache.commons.cli.Options;
  */
 public class Main {
     private Options opts;
-    
+
     public Main() {
         this.opts = new Options();
 
@@ -25,11 +25,12 @@ public class Main {
                 .withLongOpt("cfg")
                 .withDescription("Set the configuration file")
                 .hasArg()
+                .isRequired()
                 .withArgName("CFGFILE")
                 .create("c"));
     }
-    
-        public void printHelp(Integer code) {
+
+    public void printHelp(Integer code) {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("Memento", this.opts);
         System.exit(code);
