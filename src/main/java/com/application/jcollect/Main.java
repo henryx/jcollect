@@ -59,7 +59,14 @@ public class Main {
 
         interval = Integer.parseInt(cfg.getProperty("interval"));
         while (true) {
-            // TODO add code for execute collectors systems
+            switch (System.getProperty("os.name").split(" ")[0]) {
+                case "Windows":
+                    // TODO: write code for getting data on windows systems
+                    break;
+                case "Linux":
+                    // TODO: write code for getting data on linux systems
+                    break;
+            }
             Thread.sleep(interval * 1000);
         }
     }
