@@ -6,6 +6,7 @@
  */
 package com.application.jcollect;
 
+import com.application.jcollect.core.linux.Proc;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -64,7 +65,8 @@ public class Main {
                     // TODO: write code for getting data on windows systems
                     break;
                 case "Linux":
-                    // TODO: write code for getting data on linux systems
+                    Proc proc = new Proc();
+                    proc.get();
                     break;
             }
             Thread.sleep(interval * 1000);
