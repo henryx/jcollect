@@ -4,14 +4,13 @@
  Description   A collectd system replacement
  License       GPL version 2 (see GPL.txt for details)
  */
-package com.application.jcollect.core.linux;
+package com.application.jcollect.core.linux.proc;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

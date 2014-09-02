@@ -6,7 +6,7 @@
  */
 package com.application.jcollect.core.linux;
 
-import com.application.jcollect.core.linux.Cpu;
+import com.application.jcollect.core.linux.proc.Cpu;
 import java.util.ArrayList;
 import java.util.HashMap;
 
