@@ -30,27 +30,29 @@ public class Cpu {
     public HashMap<String, HashMap<String, String>> get() {
         HashMap<String, HashMap<String, String>> result;
         HashMap<String, String> store;
-        String[] line;
+        String[] data;
+        String line;
 
         result = new HashMap<>();
         store = new HashMap<String, String>();
-        
+
         try (BufferedReader in = new BufferedReader(new FileReader(this.stat));) {
+            while ((line = in.readLine()) != null) {
+                data = line.replace("  ", " ").split(" ");
+                if (data[0].startsWith("cpu")) {
+                    store.put(data[0] + ".name", data[0]);
+                    store.put(data[0] + ".user", data[1]);
+                    store.put(data[0] + ".system", data[3]);
+                    store.put(data[0] + ".idle", data[4]);
+                } else if (data[0].equals("procs_running")) {
+                    store.put("procs.running", data[1]);
+                } else if (data[0].equals("procs_blocked")) {
+                    store.put("procs.blocked", data[1]);
+                }
+            }
 
-            line = in.readLine().replace("  ", " ").split(" ");
-            store.put("cpu.name", line[0]);
-            store.put("cpu.user", line[1]);
-            store.put("cpu.system", line[3]);
-            store.put("cpu.idle", line[4]);
-
-            line = in.readLine().replace("  ", " ").split(" ");
-            store.put("cpu.0.name", line[0]);
-            store.put("cpu.0.user", line[1]);
-            store.put("cpu.0.system", line[3]);
-            store.put("cpu.0.idle", line[4]);
-            
             result.put("cpu", store);
-            
+
         } catch (FileNotFoundException ex) {
             // Useless
             ex.printStackTrace();
