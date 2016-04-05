@@ -7,56 +7,40 @@
 package com.application.jcollect;
 
 import com.application.jcollect.core.linux.Proc;
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+import com.beust.jcommander.ParameterException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
 
 /**
  *
  * @author enrico
  */
 public class Main {
-    private Options opts;
+
+    @Parameter(names = {"-h", "--help"}, help = true, description = "Print this help")
+    private Boolean help;
+
+    @Parameter(names = {"-c", "--cfg"}, description = "Set the configuration file", required = true)
+    private String cfg;
 
     public Main() {
-        this.opts = new Options();
-
-        this.opts.addOption("h", "help", false, "Print this help");
-        this.opts.addOption(OptionBuilder
-                .withLongOpt("cfg")
-                .withDescription("Set the configuration file")
-                .hasArg()
-                .isRequired()
-                .withArgName("CFGFILE")
-                .create("c"));
     }
 
-    public void printHelp(Integer code) {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("JCollect", this.opts);
-        System.exit(code);
+    public Boolean getHelp() {
+        return this.help;
     }
 
-    public void go(String[] args) throws ParseException, FileNotFoundException, IOException, InterruptedException {
-        CommandLine cmd;
-        CommandLineParser parser;
+    public void go() throws FileNotFoundException, IOException, InterruptedException {
         Properties cfg;
         int interval;
 
-        parser = new PosixParser();
-        cmd = parser.parse(this.opts, args);
-
         cfg = new Properties();
-        cfg.load(new FileInputStream(new File(cmd.getOptionValue("cfg"))));
+        cfg.load(new FileInputStream(new File(this.cfg)));
 
         interval = Integer.parseInt(cfg.getProperty("interval"));
         while (true) {
@@ -74,19 +58,30 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        JCommander cmd;
         Main app;
 
         app = new Main();
         try {
-            app.go(args);
-        } catch (ParseException ex) {
-            app.printHelp(1);
-        } catch (FileNotFoundException ex) {
-            System.err.println("Configuration file not found");
-        } catch (IOException ex) {
-            System.err.println("Error when opening configuration file");
-        } catch (InterruptedException ex) {
-            System.err.println("Interrupted");
+            cmd = new JCommander(app, args);
+            cmd.setProgramName("JCollect");
+
+            try {
+                app.go();
+            } catch (FileNotFoundException ex) {
+                System.err.println("Configuration file not found");
+                cmd.usage();
+                System.exit(1);
+            } catch (IOException ex) {
+                System.err.println("Error when opening configuration file");
+                System.exit(2);
+            } catch (InterruptedException ex) {
+                System.err.println("Interrupted");
+                System.exit(3);
+            }
+        } catch (ParameterException ex) {
+            System.err.println(ex.getMessage());
+            System.exit(4);
         }
     }
 }
