@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Properties;
+import org.ini4j.Wini;
 
 /**
  *
@@ -36,13 +36,13 @@ public class Main {
     }
 
     public void go() throws FileNotFoundException, IOException, InterruptedException {
-        Properties cfg;
+        Wini cfg;
         int interval;
 
-        cfg = new Properties();
+        cfg = new Wini();
         cfg.load(new FileInputStream(new File(this.cfg)));
 
-        interval = Integer.parseInt(cfg.getProperty("interval"));
+        interval = Integer.parseInt(cfg.get("general", "interval"));
         while (true) {
             switch (System.getProperty("os.name").split(" ")[0]) {
                 case "Windows":
