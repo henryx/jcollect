@@ -1,12 +1,11 @@
 /*
- Copyright (C) 2014 Enrico Bianchi (enrico.bianchi@gmail.com)
+ Copyright (C) 2016 Enrico Bianchi (enrico.bianchi@gmail.com)
  Project       JCollect
  Description   A collectd system replacement
  License       GPL version 2 (see GPL.txt for details)
  */
 package com.application.jcollect;
 
-import com.application.jcollect.core.linux.Proc;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
@@ -44,15 +43,7 @@ public class Main {
 
         interval = Integer.parseInt(cfg.get("general", "interval"));
         while (true) {
-            switch (System.getProperty("os.name").split(" ")[0]) {
-                case "Windows":
-                    // TODO: write code for getting data on windows systems
-                    break;
-                case "Linux":
-                    Proc proc = new Proc();
-                    proc.get();
-                    break;
-            }
+            Manager.exec(cfg);
             Thread.sleep(interval * 1000);
         }
     }
