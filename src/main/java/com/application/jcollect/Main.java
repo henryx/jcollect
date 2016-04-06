@@ -22,7 +22,7 @@ import org.ini4j.Wini;
 public class Main {
 
     @Parameter(names = {"-h", "--help"}, help = true, description = "Print this help")
-    private Boolean help;
+    private Boolean help = Boolean.FALSE;
 
     @Parameter(names = {"-c", "--cfg"}, description = "Set the configuration file", required = true)
     private String cfg;
