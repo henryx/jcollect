@@ -16,10 +16,9 @@ public class Manager {
     
     public static void exec(Wini cfg) {
         for (String section : cfg.keySet()) {
-            if (!(section.equals("general") || section.equals("dataset"))) {
+            if (!(section.equals("general") || section.equals("output"))) {
                 // TODO: launch thread for section
             }
         }
-    }
-    
+    }    
 }
