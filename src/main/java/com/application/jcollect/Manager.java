@@ -6,7 +6,7 @@
  */
 package com.application.jcollect;
 
-import com.application.jcollect.input.Input;
+import com.application.jcollect.input.GenericInput;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import org.ini4j.Profile.Section;
@@ -29,10 +29,10 @@ public class Manager {
         for (String section : cfg.keySet()) {
             if (!(section.equals("general") || section.equals("output"))) {
                 Constructor constructor = Class.forName(Manager.INPUTS.get(section)).getConstructor(Section.class);
-                
-                Input input = (Input)constructor.newInstance(cfg.get(section));
+
+                GenericInput input = (GenericInput) constructor.newInstance(cfg.get(section));
                 input.setHostname(cfg.get("general", "hostname"));
-                
+
                 Thread thread = new Thread(input);
                 thread.start();
             }

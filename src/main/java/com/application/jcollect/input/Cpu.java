@@ -12,7 +12,7 @@ import org.ini4j.Profile.Section;
  *
  * @author ebianchi
  */
-public class Cpu extends Input {
+public class Cpu extends GenericInput {
     
     public Cpu(Section section) {
         super(section);
