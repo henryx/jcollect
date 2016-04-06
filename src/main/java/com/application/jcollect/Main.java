@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.ini4j.Wini;
 
 /**
@@ -34,7 +36,7 @@ public class Main {
         return this.help;
     }
 
-    public void go() throws FileNotFoundException, IOException, InterruptedException {
+    public void go() throws FileNotFoundException, IOException, InterruptedException, ReflectiveOperationException {
         Wini cfg;
         int interval;
 
@@ -73,6 +75,9 @@ public class Main {
             } catch (InterruptedException ex) {
                 System.err.println("Interrupted");
                 System.exit(3);
+            } catch (ReflectiveOperationException ex) {
+                System.err.println("Problem when loading class: " + ex.getMessage());
+                System.exit(5);
             }
         } catch (ParameterException ex) {
             System.err.println(ex.getMessage());
