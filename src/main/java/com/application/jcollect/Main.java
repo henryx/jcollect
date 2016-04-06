@@ -58,6 +58,10 @@ public class Main {
             cmd.setProgramName("JCollect");
 
             try {
+                if (app.getHelp()) {
+                    cmd.usage();
+                    System.exit(0);
+                }
                 app.go();
             } catch (FileNotFoundException ex) {
                 System.err.println("Configuration file not found");
