@@ -11,7 +11,6 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.ini4j.Profile.Section;
-import oshi.SystemInfo;
 
 /**
  *
@@ -20,19 +19,17 @@ import oshi.SystemInfo;
 public abstract class Input implements Runnable {
 
     private String hostname;
-    private final SystemInfo si;
     private final Section section;
 
     public Input(Section section) {
         this.section = section;
-        this.si = new SystemInfo();
     }
 
     /**
      * @return the operating system
      */
     public String getOs() {
-        return this.si.getOperatingSystem().getManufacturer();
+        return System.getProperty("os.name");
     }
     
     public Section getSection() {
