@@ -6,6 +6,10 @@
  */
 package com.application.jcollect;
 
+import com.application.jcollect.input.Input;
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import org.ini4j.Profile.Section;
 import org.ini4j.Wini;
 
 /**
@@ -13,12 +17,25 @@ import org.ini4j.Wini;
  * @author enrico
  */
 public class Manager {
-    
-    public static void exec(Wini cfg) {
+
+    private static final HashMap<String, String> INPUTS = new HashMap<String, String>() {
+        {
+            put("cpu", "com.application.jcollect.input.Cpu");
+        }
+    };
+
+    public static void exec(Wini cfg) throws ReflectiveOperationException {
+
         for (String section : cfg.keySet()) {
             if (!(section.equals("general") || section.equals("output"))) {
-                // TODO: launch thread for section
+                Constructor constructor = Class.forName(Manager.INPUTS.get(section)).getConstructor(Section.class);
+                
+                Input input = (Input)constructor.newInstance(cfg.get(section));
+                input.setHostname(cfg.get("general", "hostname"));
+                
+                Thread thread = new Thread(input);
+                thread.start();
             }
         }
-    }    
+    }
 }
