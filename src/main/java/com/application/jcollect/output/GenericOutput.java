@@ -15,9 +15,9 @@ import org.ini4j.Profile.Section;
  */
 public abstract class GenericOutput {
 
-    private final Section section;
-    private HashMap<String, String> data;
-    private String name;
+    protected HashMap<String, String> data;
+    protected String name;
+    protected final Section section;
 
     public GenericOutput(Section section) {
         this.section = section;
@@ -25,14 +25,6 @@ public abstract class GenericOutput {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public Section getSection() {
-        return this.section;
     }
 
     public void setData(HashMap<String, String> data) {
