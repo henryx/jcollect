@@ -28,14 +28,21 @@ public class OutputCSV extends GenericOutput {
 
     @Override
     public void write() {
-        String fileName = this.section.get("path") + File.separator + this.name.toLowerCase() + ".csv";
+        String fileName;
+        long now;
         
-        try(FileWriter writer = new FileWriter(fileName)) {
-            // TODO: Write code for writing data into CSV file
-            
+        now = System.currentTimeMillis() / 1000L;
+        fileName = this.section.get("path") + File.separator + this.name.toLowerCase() + ".csv";
+        
+        try(FileWriter writer = new FileWriter(fileName, true)) {
+            writer.append(Long.toString(now));
+            writer.append(this.COMMA_DELIMITER);
+            for (String key: this.data.keySet()) {
+                writer.append(this.data.get(key));
+                writer.append(this.COMMA_DELIMITER);
+            }
             writer.append(this.NEW_LINE_SEPARATOR);
-            
-            
+           
             writer.flush();
         } catch (IOException ex) {
             Logger.getLogger(OutputCSV.class.getName()).log(Level.SEVERE, null, ex);
