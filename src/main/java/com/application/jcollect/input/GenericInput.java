@@ -19,9 +19,9 @@ import org.ini4j.Profile.Section;
  */
 public abstract class GenericInput implements Runnable {
 
-    private GenericOutput output;
     private String hostname;
-    private final Section section;
+    protected final Section section;
+    protected GenericOutput output;
 
     public GenericInput(Section section) {
         this.section = section;
@@ -34,16 +34,8 @@ public abstract class GenericInput implements Runnable {
         return System.getProperty("os.name");
     }
 
-    public Section getSection() {
-        return this.section;
-    }
-
     public void setOutput(GenericOutput output) {
         this.output = output;
-    }
-
-    public GenericOutput getOutput() {
-        return this.output;
     }
 
     public void setHostname(String hostname) {
