@@ -6,6 +6,7 @@
  */
 package com.application.jcollect.input;
 
+import com.application.jcollect.output.GenericOutput;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ import org.ini4j.Profile.Section;
  */
 public abstract class GenericInput implements Runnable {
 
+    private GenericOutput output;
     private String hostname;
     private final Section section;
 
@@ -31,9 +33,21 @@ public abstract class GenericInput implements Runnable {
     public String getOs() {
         return System.getProperty("os.name");
     }
-    
+
     public Section getSection() {
         return this.section;
+    }
+
+    public void setOutput(GenericOutput output) {
+        this.output = output;
+    }
+
+    public GenericOutput getOutput() {
+        return this.output;
+    }
+
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
     }
 
     public String getHostname() {
@@ -47,9 +61,5 @@ public abstract class GenericInput implements Runnable {
             Logger.getLogger(GenericInput.class.getName()).log(Level.SEVERE, null, ex);
             return "unknown";
         }
-    }
-
-    public void setHostname(String hostname) {
-        this.hostname = hostname;
     }
 }
