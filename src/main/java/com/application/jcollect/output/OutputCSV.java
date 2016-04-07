@@ -28,7 +28,7 @@ public class OutputCSV extends GenericOutput {
 
     @Override
     public void write() {
-        String fileName = this.getSection().get("output", "path") + File.separator + this.getName() + ".csv";
+        String fileName = this.section.get("path") + File.separator + this.name.toLowerCase() + ".csv";
         
         try(FileWriter writer = new FileWriter(fileName)) {
             // TODO: Write code for writing data into CSV file
