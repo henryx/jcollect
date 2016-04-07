@@ -6,7 +6,7 @@
  */
 package com.application.jcollect.output;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
 
 /**
@@ -15,7 +15,7 @@ import org.ini4j.Profile.Section;
  */
 public abstract class GenericOutput {
 
-    protected HashMap<String, String> data;
+    protected LinkedHashMap<String, String> data;
     protected String name;
     protected final Section section;
 
@@ -27,7 +27,7 @@ public abstract class GenericOutput {
         this.name = name;
     }
 
-    public void setData(HashMap<String, String> data) {
+    public void setData(LinkedHashMap<String, String> data) {
         this.data = data;
     }
 
