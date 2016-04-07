@@ -13,8 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.management.AttributeNotFoundException;
 import org.ini4j.Wini;
 
 /**
@@ -36,11 +35,12 @@ public class Main {
         return this.help;
     }
 
-    public void go() throws FileNotFoundException, IOException, InterruptedException, ReflectiveOperationException {
+    public void go() throws FileNotFoundException, IOException, InterruptedException, ReflectiveOperationException, AttributeNotFoundException {
         Wini cfg;
         int interval;
 
         cfg = new Wini();
+
         cfg.load(new FileInputStream(new File(this.cfg)));
 
         interval = Integer.parseInt(cfg.get("general", "interval"));
@@ -78,6 +78,9 @@ public class Main {
             } catch (ReflectiveOperationException ex) {
                 System.err.println("Problem when loading class: " + ex.getMessage());
                 System.exit(5);
+            } catch (AttributeNotFoundException ex) {
+                System.err.println("Problem when processing data: " + ex.getMessage());
+                System.exit(6);
             }
         } catch (ParameterException ex) {
             System.err.println(ex.getMessage());

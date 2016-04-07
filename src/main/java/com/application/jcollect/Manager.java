@@ -7,8 +7,11 @@
 package com.application.jcollect;
 
 import com.application.jcollect.input.GenericInput;
+import com.application.jcollect.output.GenericOutput;
+import com.application.jcollect.output.OutputCSV;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import javax.management.AttributeNotFoundException;
 import org.ini4j.Profile.Section;
 import org.ini4j.Wini;
 
@@ -24,7 +27,7 @@ public class Manager {
         }
     };
 
-    public static void exec(Wini cfg) throws ReflectiveOperationException {
+    public static void exec(Wini cfg) throws ReflectiveOperationException, AttributeNotFoundException {
 
         for (String section : cfg.keySet()) {
             if (!(section.equals("general") || section.equals("output"))) {
@@ -32,10 +35,23 @@ public class Manager {
 
                 GenericInput input = (GenericInput) constructor.newInstance(cfg.get(section));
                 input.setHostname(cfg.get("general", "hostname"));
+                input.setOutput(Manager.computeOutput(cfg.get("output")));
 
                 Thread thread = new Thread(input);
                 thread.start();
             }
+        }
+    }
+
+    private static GenericOutput computeOutput(Section section) throws AttributeNotFoundException {
+        String type;
+
+        type = section.get("type");
+        switch (type) {
+            case "csv":
+                return new OutputCSV(section);
+            default:
+                throw new AttributeNotFoundException("Type not valid: " + type);
         }
     }
 }
