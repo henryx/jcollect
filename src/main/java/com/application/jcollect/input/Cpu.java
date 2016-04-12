@@ -8,15 +8,30 @@ package com.application.jcollect.input;
 
 import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
+import oshi.SystemInfo;
+import oshi.hardware.CentralProcessor;
 
 /**
  *
  * @author ebianchi
  */
 public class Cpu extends GenericInput {
+    private CentralProcessor cpu;
 
     public Cpu(Section section) {
         super(section);
+        
+        SystemInfo si;
+        
+        si = new SystemInfo();
+        this.cpu = si.getHardware().getProcessor();
+    }
+
+    private double getCpuLoadAverage() {
+        double load;
+        
+        load = this.cpu.getSystemLoadAverage();
+        return load;
     }
 
     @Override
@@ -27,6 +42,7 @@ public class Cpu extends GenericInput {
 
         data.put("hostname", this.getHostname());
         data.put("os", this.getOs());
+        data.put("load", Double.toString(this.getCpuLoadAverage()));
         // TODO: getting Cpu metrics
 
         this.output.setName("Cpu");
