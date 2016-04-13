@@ -16,7 +16,7 @@ import oshi.hardware.CentralProcessor;
  * @author ebianchi
  */
 public class Cpu extends GenericInput {
-    private CentralProcessor cpu;
+    private final CentralProcessor cpu;
 
     public Cpu(Section section) {
         super(section);
