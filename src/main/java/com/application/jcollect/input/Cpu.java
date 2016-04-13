@@ -52,7 +52,7 @@ public class Cpu extends GenericInput {
     @Override
     public void run() {
         LinkedHashMap<String, String> data;
-        double[] loads = new double[4];
+        double[] loads;
 
         data = new LinkedHashMap<>();
         loads = this.getCpuLoads();
