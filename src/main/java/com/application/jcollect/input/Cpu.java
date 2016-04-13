@@ -62,7 +62,13 @@ public class Cpu extends GenericInput {
         for (int i = 0; i < loads.length; i++) {
             data.put("cpu" + (i + 1), Double.toString(loads[i] * 100));
         }
-        data.put("load", Double.toString(this.getCpuLoad()));
+
+        if (this.section.get("aggregate", boolean.class)) {
+         data.put("load", Double.toString(this.getCpuLoad()));   
+        } else {
+            data.put("load", "");
+        }
+
         data.put("loadavg", Double.toString(this.getCpuLoadAverage()));
         // TODO: getting Cpu metrics
 
