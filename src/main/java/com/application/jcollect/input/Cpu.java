@@ -64,9 +64,9 @@ public class Cpu extends GenericInput {
         }
 
         if (this.section.get("aggregate", boolean.class)) {
-         data.put("load", Double.toString(this.getCpuLoad()));   
+         data.put("cpu", Double.toString(this.getCpuLoad()));   
         } else {
-            data.put("load", "");
+            data.put("cpu", "");
         }
 
         data.put("loadavg", Double.toString(this.getCpuLoadAverage()));
