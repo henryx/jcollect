@@ -34,6 +34,13 @@ public class Cpu extends GenericInput {
         return load;
     }
     
+    private double getCpuLoad() {
+        double load;
+        
+        load = this.cpu.getSystemCpuLoad() * 100;
+        return load;
+    } 
+
     @Override
     public void run() {
         LinkedHashMap<String, String> data;
@@ -42,6 +49,7 @@ public class Cpu extends GenericInput {
 
         data.put("hostname", this.getHostname());
         data.put("os", this.getOs());
+        data.put("load", Double.toString(this.getCpuLoad()));
         data.put("loadavg", Double.toString(this.getCpuLoadAverage()));
         // TODO: getting Cpu metrics
 
