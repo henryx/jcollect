@@ -22,28 +22,30 @@ import org.ini4j.Wini;
 public class Manager {
 
     private final Wini CFG;
+    private final HashMap<String, GenericInput> ENABLEDINPUTS;
     private final HashMap<String, String> INPUTS = new HashMap<String, String>() {
         {
             put("cpu", "com.application.jcollect.input.Cpu");
         }
     };
-    
-    public Manager(Wini cfg) {
+
+    public Manager(Wini cfg) throws ReflectiveOperationException, AttributeNotFoundException {
         this.CFG = cfg;
+        this.ENABLEDINPUTS = new HashMap<>();
+
+        this.init();
     }
 
-    public void exec() throws ReflectiveOperationException, AttributeNotFoundException {
-
+    private void init() throws ReflectiveOperationException, AttributeNotFoundException {
         for (String section : this.CFG.keySet()) {
-            if (!(section.equals("general") || section.equals("output"))) {
+            if (!(section.equals("general") || section.equals("output"))
+                    && this.CFG.get(section, "enabled", boolean.class)) {
                 Constructor constructor = Class.forName(this.INPUTS.get(section)).getConstructor(Section.class);
 
                 GenericInput input = (GenericInput) constructor.newInstance(this.CFG.get(section));
-                input.setHostname(this.CFG.get("general", "hostname"));
-                input.setOutput(this.computeOutput(CFG.get("output")));
-
-                Thread thread = new Thread(input);
-                thread.start();
+                input.setHostname(CFG.get("general", "hostname"));
+                input.setOutput(this.computeOutput(this.CFG.get("output")));
+                this.ENABLEDINPUTS.put(section, input);
             }
         }
     }
@@ -57,6 +59,14 @@ public class Manager {
                 return new OutputCSV(section);
             default:
                 throw new AttributeNotFoundException("Type not valid: " + type);
+        }
+    }
+
+    public void exec() {
+        for (String input : this.ENABLEDINPUTS.keySet()) {
+            Thread thread = new Thread(this.ENABLEDINPUTS.get(input));
+            thread.setName(input + " data collector");
+            thread.start();
         }
     }
 }
