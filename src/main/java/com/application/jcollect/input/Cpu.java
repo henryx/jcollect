@@ -28,10 +28,10 @@ public class Cpu extends GenericInput {
         this.cpu = si.getHardware().getProcessor();
     }
 
-    private double getCpuLoadAverage() {
-        double load;
+    private double[] getCpuLoadAverage() {
+        double[] load;
 
-        load = this.cpu.getSystemLoadAverage();
+        load = this.cpu.getSystemLoadAverage(3);
         return load;
     }
 
@@ -52,10 +52,11 @@ public class Cpu extends GenericInput {
     @Override
     public void run() {
         LinkedHashMap<String, String> data;
-        double[] cpuloads;
+        double[] cpuloads, avgloads;
 
         data = new LinkedHashMap<>();
         cpuloads = this.getCpuLoads();
+        avgloads = this.getCpuLoadAverage();
 
         data.put("hostname", this.getHostname());
         data.put("os", this.getOs());
@@ -69,8 +70,9 @@ public class Cpu extends GenericInput {
             data.put("cpu", "");
         }
 
-        data.put("loadavg", Double.toString(this.getCpuLoadAverage()));
-        // TODO: getting Cpu metrics
+        data.put("load1", Double.toString(avgloads[0]));
+        data.put("load5", Double.toString(avgloads[1]));
+        data.put("load15", Double.toString(avgloads[2]));
 
         this.output.setName("Cpu");
         this.output.setData(data);
