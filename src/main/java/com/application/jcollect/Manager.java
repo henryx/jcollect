@@ -21,21 +21,26 @@ import org.ini4j.Wini;
  */
 public class Manager {
 
+    private final Wini CFG;
     private final HashMap<String, String> INPUTS = new HashMap<String, String>() {
         {
             put("cpu", "com.application.jcollect.input.Cpu");
         }
     };
+    
+    public Manager(Wini cfg) {
+        this.CFG = cfg;
+    }
 
-    public void exec(Wini cfg) throws ReflectiveOperationException, AttributeNotFoundException {
+    public void exec() throws ReflectiveOperationException, AttributeNotFoundException {
 
-        for (String section : cfg.keySet()) {
+        for (String section : this.CFG.keySet()) {
             if (!(section.equals("general") || section.equals("output"))) {
                 Constructor constructor = Class.forName(this.INPUTS.get(section)).getConstructor(Section.class);
 
-                GenericInput input = (GenericInput) constructor.newInstance(cfg.get(section));
-                input.setHostname(cfg.get("general", "hostname"));
-                input.setOutput(this.computeOutput(cfg.get("output")));
+                GenericInput input = (GenericInput) constructor.newInstance(this.CFG.get(section));
+                input.setHostname(this.CFG.get("general", "hostname"));
+                input.setOutput(this.computeOutput(CFG.get("output")));
 
                 Thread thread = new Thread(input);
                 thread.start();

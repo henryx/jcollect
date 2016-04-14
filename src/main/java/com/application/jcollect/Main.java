@@ -42,11 +42,11 @@ public class Main {
 
         cfg = new Wini();
         cfg.load(new FileInputStream(new File(this.cfg)));
-        manager = new Manager();
+        manager = new Manager(cfg);
 
         interval = Integer.parseInt(cfg.get("general", "interval"));
         while (true) {
-            manager.exec(cfg);
+            manager.exec();
             Thread.sleep(interval * 1000);
         }
     }
