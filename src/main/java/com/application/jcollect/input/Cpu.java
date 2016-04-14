@@ -52,19 +52,19 @@ public class Cpu extends GenericInput {
     @Override
     public void run() {
         LinkedHashMap<String, String> data;
-        double[] loads;
+        double[] cpuloads;
 
         data = new LinkedHashMap<>();
-        loads = this.getCpuLoads();
+        cpuloads = this.getCpuLoads();
 
         data.put("hostname", this.getHostname());
         data.put("os", this.getOs());
-        for (int i = 0; i < loads.length; i++) {
-            data.put("cpu" + (i + 1), Double.toString(loads[i] * 100));
+        for (int i = 0; i < cpuloads.length; i++) {
+            data.put("cpu" + (i + 1), Double.toString(cpuloads[i] * 100));
         }
 
         if (this.section.get("aggregate", boolean.class)) {
-         data.put("cpu", Double.toString(this.getCpuLoad()));   
+            data.put("cpu", Double.toString(this.getCpuLoad()));
         } else {
             data.put("cpu", "");
         }
@@ -76,5 +76,4 @@ public class Cpu extends GenericInput {
         this.output.setData(data);
         this.output.write();
     }
-
 }
