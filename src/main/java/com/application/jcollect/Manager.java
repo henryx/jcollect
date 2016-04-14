@@ -21,21 +21,21 @@ import org.ini4j.Wini;
  */
 public class Manager {
 
-    private static final HashMap<String, String> INPUTS = new HashMap<String, String>() {
+    private final HashMap<String, String> INPUTS = new HashMap<String, String>() {
         {
             put("cpu", "com.application.jcollect.input.Cpu");
         }
     };
 
-    public static void exec(Wini cfg) throws ReflectiveOperationException, AttributeNotFoundException {
+    public void exec(Wini cfg) throws ReflectiveOperationException, AttributeNotFoundException {
 
         for (String section : cfg.keySet()) {
             if (!(section.equals("general") || section.equals("output"))) {
-                Constructor constructor = Class.forName(Manager.INPUTS.get(section)).getConstructor(Section.class);
+                Constructor constructor = Class.forName(this.INPUTS.get(section)).getConstructor(Section.class);
 
                 GenericInput input = (GenericInput) constructor.newInstance(cfg.get(section));
                 input.setHostname(cfg.get("general", "hostname"));
-                input.setOutput(Manager.computeOutput(cfg.get("output")));
+                input.setOutput(this.computeOutput(cfg.get("output")));
 
                 Thread thread = new Thread(input);
                 thread.start();
@@ -43,7 +43,7 @@ public class Manager {
         }
     }
 
-    private static GenericOutput computeOutput(Section section) throws AttributeNotFoundException {
+    private GenericOutput computeOutput(Section section) throws AttributeNotFoundException {
         String type;
 
         type = section.get("type");
