@@ -44,19 +44,19 @@ public class Manager {
 
                 GenericInput input = (GenericInput) constructor.newInstance(this.CFG.get(section));
                 input.setHostname(CFG.get("general", "hostname"));
-                input.setOutput(this.computeOutput(this.CFG.get("output")));
+                input.setOutput(this.computeOutput());
                 this.ENABLEDINPUTS.put(section, input);
             }
         }
     }
 
-    private GenericOutput computeOutput(Section section) throws AttributeNotFoundException {
+    private GenericOutput computeOutput() throws AttributeNotFoundException {
         String type;
 
-        type = section.get("type");
+        type = this.CFG.get("output", "type");
         switch (type) {
             case "csv":
-                return new OutputCSV(section);
+                return new OutputCSV(this.CFG.get("output"));
             default:
                 throw new AttributeNotFoundException("Type not valid: " + type);
         }
