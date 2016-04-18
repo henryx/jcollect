@@ -3,4 +3,4 @@
 
 * Initial public release
 * Read CPU
-* Write CSV data
+* Write data into CSV files
