@@ -26,6 +26,7 @@ public class Manager {
     private final HashMap<String, String> INPUTS = new HashMap<String, String>() {
         {
             put("cpu", "com.application.jcollect.input.Cpu");
+            put("memory", "com.application.jcollect.input.Memory");
         }
     };
 
