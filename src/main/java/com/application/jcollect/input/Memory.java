@@ -6,7 +6,10 @@
  */
 package com.application.jcollect.input;
 
+import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
+import oshi.SystemInfo;
+import oshi.hardware.GlobalMemory;
 
 /**
  *
@@ -14,13 +17,28 @@ import org.ini4j.Profile.Section;
  */
 public class Memory extends GenericInput {
 
+    private final GlobalMemory mem;
+
     public Memory(Section section) {
         super(section);
+
+        SystemInfo si;
+
+        si = new SystemInfo();
+        this.mem = si.getHardware().getMemory();
     }
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        LinkedHashMap<String, String> data;
 
+        data = new LinkedHashMap<>();
+
+        data.put("total", Long.toString(this.mem.getTotal()));
+        data.put("available", Long.toString(this.mem.getAvailable()));
+
+        this.output.setName("Mem");
+        this.output.setData(data);
+        this.output.write();
+    }
 }
