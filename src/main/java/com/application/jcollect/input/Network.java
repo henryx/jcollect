@@ -6,7 +6,10 @@
  */
 package com.application.jcollect.input;
 
+import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
+import oshi.SystemInfo;
+import oshi.hardware.NetworkIF;
 
 /**
  *
@@ -15,13 +18,29 @@ import org.ini4j.Profile.Section;
 public class Network extends GenericInput {
 
     private final String metricName = "Network";
+    private final SystemInfo si;
 
     public Network(Section section) {
         super(section);
+
+        this.si = new SystemInfo();
     }
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        LinkedHashMap<String, String> data;
+
+        data = new LinkedHashMap<>();
+
+        for (NetworkIF netIF : this.si.getHardware().getNetworkIFs()) {
+            data.put("name", netIF.getName());
+            data.put("mac", netIF.getMacaddr());
+            data.put("bytessent", Long.toString(netIF.getBytesSent()));
+            data.put("bytesrecv", Long.toString(netIF.getBytesRecv()));
+            data.put("packetssent", Long.toString(netIF.getPacketsSent()));
+            data.put("packetsrecv", Long.toString(netIF.getPacketsRecv()));
+            
+            this.write(this.metricName, data);
+        }
     }
 }
