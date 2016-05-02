@@ -41,5 +41,4 @@ public class Memory extends GenericInput {
 
         this.write(this.metricName, data);
     }
-
 }
