@@ -18,6 +18,7 @@ import oshi.hardware.GlobalMemory;
 public class Memory extends GenericInput {
 
     private final GlobalMemory mem;
+    private final String metricName = "Memory";
 
     public Memory(Section section) {
         super(section);
@@ -38,9 +39,7 @@ public class Memory extends GenericInput {
         data.put("swaptotal", Long.toString(this.mem.getSwapTotal()));
         data.put("swapused", Long.toString(this.mem.getSwapUsed()));
 
-        this.output.setName("Memory");
-        this.output.setData(data);
-        this.output.write();
+        this.write(this.metricName, data);
     }
 
 }

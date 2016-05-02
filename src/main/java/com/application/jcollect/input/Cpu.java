@@ -18,6 +18,7 @@ import oshi.hardware.CentralProcessor;
 public class Cpu extends GenericInput {
 
     private final CentralProcessor cpu;
+    private final String metricName = "Cpu";
 
     public Cpu(Section section) {
         super(section);
@@ -74,8 +75,6 @@ public class Cpu extends GenericInput {
         data.put("load5", Double.toString(avgloads[1]));
         data.put("load15", Double.toString(avgloads[2]));
 
-        this.output.setName("Cpu");
-        this.output.setData(data);
-        this.output.write();
+        this.write(this.metricName, data);
     }
 }

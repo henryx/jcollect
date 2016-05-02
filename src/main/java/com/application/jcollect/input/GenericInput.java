@@ -9,6 +9,8 @@ package com.application.jcollect.input;
 import com.application.jcollect.output.GenericOutput;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.ini4j.Profile.Section;
@@ -27,9 +29,12 @@ public abstract class GenericInput implements Runnable {
         this.section = section;
     }
 
-    /**
-     * @return the operating system
-     */
+    public void write(String section, LinkedHashMap<String, String> data) {
+        this.output.setName(section);
+        this.output.setData(data);
+        this.output.write();
+    }
+
     public String getOs() {
         return System.getProperty("os.name");
     }
