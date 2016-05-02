@@ -27,6 +27,7 @@ public class Manager {
         {
             put("cpu", "com.application.jcollect.input.Cpu");
             put("memory", "com.application.jcollect.input.Memory");
+            put("network", "com.application.jcollect.input.Network");
         }
     };
 
