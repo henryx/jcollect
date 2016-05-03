@@ -20,7 +20,7 @@ import org.ini4j.Wini;
 
 /**
  *
- * @author enrico
+ * @author enrico.bianchi@gmail.com
  */
 public class Manager {
 
@@ -70,7 +70,7 @@ public class Manager {
 
     public void exec() {
         ScheduledExecutorService exec;
-        
+
         exec = Executors.newSingleThreadScheduledExecutor();
         for (String input : this.ENABLEDINPUTS.keySet()) {
             Thread thread = new Thread(this.ENABLEDINPUTS.get(input));

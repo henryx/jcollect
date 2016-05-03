@@ -14,7 +14,7 @@ import oshi.hardware.CentralProcessor;
 
 /**
  *
- * @author ebianchi
+ * @author enrico.bianchi@gmail.com
  */
 public class Cpu extends Input {
 

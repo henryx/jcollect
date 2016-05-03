@@ -16,7 +16,7 @@ import org.ini4j.Profile.Section;
 
 /**
  *
- * @author enrico
+ * @author enrico.bianchi@gmail.com
  */
 public abstract class Input implements Runnable {
 

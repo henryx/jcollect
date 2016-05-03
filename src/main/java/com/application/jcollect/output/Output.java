@@ -11,7 +11,7 @@ import org.ini4j.Profile.Section;
 
 /**
  *
- * @author ebianchi
+ * @author enrico.bianchi@gmail.com
  */
 public abstract class Output {
 

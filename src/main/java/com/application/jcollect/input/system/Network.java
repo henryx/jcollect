@@ -14,7 +14,7 @@ import oshi.hardware.NetworkIF;
 
 /**
  *
- * @author enrico
+ * @author enrico.bianchi@gmail.com
  */
 public class Network extends Input {
 

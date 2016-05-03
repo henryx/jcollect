@@ -18,7 +18,7 @@ import org.ini4j.Wini;
 
 /**
  *
- * @author enrico
+ * @author enrico.bianchi@gmail.com
  */
 public class Main {
 

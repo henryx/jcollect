@@ -14,7 +14,7 @@ import oshi.hardware.GlobalMemory;
 
 /**
  *
- * @author enrico
+ * @author enrico.bianchi@gmail.com
  */
 public class Memory extends Input {
 

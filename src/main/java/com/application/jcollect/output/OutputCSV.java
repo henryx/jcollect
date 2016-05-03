@@ -15,7 +15,7 @@ import org.ini4j.Profile.Section;
 
 /**
  *
- * @author ebianchi
+ * @author enrico.bianchi@gmail.com
  */
 public class OutputCSV extends Output {
 
@@ -30,23 +30,23 @@ public class OutputCSV extends Output {
     public void write() {
         String fileName;
         long now;
-        
+
         now = System.currentTimeMillis() / 1000L;
         fileName = this.section.get("path") + File.separator + this.name.toLowerCase() + ".csv";
-        
-        try(FileWriter writer = new FileWriter(fileName, true)) {
+
+        try (FileWriter writer = new FileWriter(fileName, true)) {
             writer.append(Long.toString(now));
             writer.append(this.COMMA_DELIMITER);
-            for (String key: this.data.keySet()) {
+            for (String key : this.data.keySet()) {
                 writer.append(this.data.get(key));
                 writer.append(this.COMMA_DELIMITER);
             }
             writer.append(this.NEW_LINE_SEPARATOR);
-           
+
             writer.flush();
         } catch (IOException ex) {
             Logger.getLogger(OutputCSV.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 }
