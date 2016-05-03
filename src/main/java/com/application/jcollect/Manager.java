@@ -32,6 +32,7 @@ public class Manager {
             put("memory", "com.application.jcollect.input.system.Memory");
             put("network", "com.application.jcollect.input.system.Network");
             put("disk", "com.application.jcollect.input.system.Disk");
+            put("filesystem", "com.application.jcollect.input.system.Filesystem");
         }
     };
 
