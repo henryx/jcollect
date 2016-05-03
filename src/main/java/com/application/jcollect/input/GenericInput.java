@@ -9,7 +9,6 @@ package com.application.jcollect.input;
 import com.application.jcollect.output.GenericOutput;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,19 +43,19 @@ public abstract class GenericInput implements Runnable {
     }
 
     public void setHostname(String hostname) {
-        this.hostname = hostname;
-    }
-
-    public String getHostname() {
         try {
-            if (this.hostname.equals("")) {
-                return InetAddress.getLocalHost().getHostName();
+            if (hostname.equals("")) {
+                this.hostname = InetAddress.getLocalHost().getHostName();
             } else {
-                return this.hostname;
+                this.hostname = hostname;
             }
         } catch (UnknownHostException ex) {
             Logger.getLogger(GenericInput.class.getName()).log(Level.SEVERE, null, ex);
-            return "unknown";
+            this.hostname = "unknown";
         }
+    }
+
+    public String getHostname() {
+        return this.hostname;
     }
 }
