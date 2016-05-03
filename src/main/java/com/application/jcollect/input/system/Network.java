@@ -4,8 +4,9 @@
  Description   A collectd system replacement
  License       GPL version 2 (see GPL.txt for details)
  */
-package com.application.jcollect.input;
+package com.application.jcollect.input.system;
 
+import com.application.jcollect.input.GenericInput;
 import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
 import oshi.SystemInfo;

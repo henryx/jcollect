@@ -28,9 +28,9 @@ public class Manager {
     private final HashMap<String, GenericInput> ENABLEDINPUTS;
     private final HashMap<String, String> INPUTS = new HashMap<String, String>() {
         {
-            put("cpu", "com.application.jcollect.input.Cpu");
-            put("memory", "com.application.jcollect.input.Memory");
-            put("network", "com.application.jcollect.input.Network");
+            put("cpu", "com.application.jcollect.input.system.Cpu");
+            put("memory", "com.application.jcollect.input.system.Memory");
+            put("network", "com.application.jcollect.input.system.Network");
         }
     };
 
