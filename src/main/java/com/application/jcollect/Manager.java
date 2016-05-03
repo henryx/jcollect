@@ -11,6 +11,9 @@ import com.application.jcollect.output.GenericOutput;
 import com.application.jcollect.output.OutputCSV;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javax.management.AttributeNotFoundException;
 import org.ini4j.Profile.Section;
 import org.ini4j.Wini;
@@ -65,10 +68,17 @@ public class Manager {
     }
 
     public void exec() {
+        ScheduledExecutorService exec;
+        
+        exec = Executors.newSingleThreadScheduledExecutor();
         for (String input : this.ENABLEDINPUTS.keySet()) {
             Thread thread = new Thread(this.ENABLEDINPUTS.get(input));
             thread.setName(input + " data collector");
-            thread.start();
+
+            exec.scheduleAtFixedRate(thread,
+                    0,
+                    Integer.parseInt(this.CFG.get("general", "interval")),
+                    TimeUnit.SECONDS);
         }
     }
 }

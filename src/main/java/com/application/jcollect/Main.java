@@ -38,17 +38,12 @@ public class Main {
     public void go() throws FileNotFoundException, IOException, InterruptedException, ReflectiveOperationException, AttributeNotFoundException {
         Manager manager;
         Wini cfg;
-        int interval;
 
         cfg = new Wini();
         cfg.load(new FileInputStream(new File(this.cfg)));
         manager = new Manager(cfg);
 
-        interval = Integer.parseInt(cfg.get("general", "interval"));
-        while (true) {
-            manager.exec();
-            Thread.sleep(interval * 1000);
-        }
+        manager.exec();
     }
 
     public static void main(String[] args) {
