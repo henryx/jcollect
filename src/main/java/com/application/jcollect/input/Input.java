@@ -6,7 +6,7 @@
  */
 package com.application.jcollect.input;
 
-import com.application.jcollect.output.GenericOutput;
+import com.application.jcollect.output.Output;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.LinkedHashMap;
@@ -18,13 +18,13 @@ import org.ini4j.Profile.Section;
  *
  * @author enrico
  */
-public abstract class GenericInput implements Runnable {
+public abstract class Input implements Runnable {
 
     private String hostname;
     protected final Section section;
-    protected GenericOutput output;
+    protected Output output;
 
-    public GenericInput(Section section) {
+    public Input(Section section) {
         this.section = section;
     }
 
@@ -38,7 +38,7 @@ public abstract class GenericInput implements Runnable {
         return System.getProperty("os.name");
     }
 
-    public void setOutput(GenericOutput output) {
+    public void setOutput(Output output) {
         this.output = output;
     }
 
@@ -50,7 +50,7 @@ public abstract class GenericInput implements Runnable {
                 this.hostname = hostname;
             }
         } catch (UnknownHostException ex) {
-            Logger.getLogger(GenericInput.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Input.class.getName()).log(Level.SEVERE, null, ex);
             this.hostname = "unknown";
         }
     }

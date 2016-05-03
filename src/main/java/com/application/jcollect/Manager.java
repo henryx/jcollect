@@ -6,8 +6,8 @@
  */
 package com.application.jcollect;
 
-import com.application.jcollect.input.GenericInput;
-import com.application.jcollect.output.GenericOutput;
+import com.application.jcollect.input.Input;
+import com.application.jcollect.output.Output;
 import com.application.jcollect.output.OutputCSV;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ import org.ini4j.Wini;
 public class Manager {
 
     private final Wini CFG;
-    private final HashMap<String, GenericInput> ENABLEDINPUTS;
+    private final HashMap<String, Input> ENABLEDINPUTS;
     private final HashMap<String, String> INPUTS = new HashMap<String, String>() {
         {
             put("cpu", "com.application.jcollect.input.system.Cpu");
@@ -47,7 +47,7 @@ public class Manager {
                     && this.CFG.get(section, "enabled", boolean.class)) {
                 Constructor constructor = Class.forName(this.INPUTS.get(section)).getConstructor(Section.class);
 
-                GenericInput input = (GenericInput) constructor.newInstance(this.CFG.get(section));
+                Input input = (Input) constructor.newInstance(this.CFG.get(section));
                 input.setHostname(CFG.get("general", "hostname"));
                 input.setOutput(this.computeOutput());
                 this.ENABLEDINPUTS.put(section, input);
@@ -55,7 +55,7 @@ public class Manager {
         }
     }
 
-    private GenericOutput computeOutput() throws AttributeNotFoundException {
+    private Output computeOutput() throws AttributeNotFoundException {
         String type;
 
         type = this.CFG.get("output", "type");

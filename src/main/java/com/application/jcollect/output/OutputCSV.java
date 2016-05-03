@@ -17,7 +17,7 @@ import org.ini4j.Profile.Section;
  *
  * @author ebianchi
  */
-public class OutputCSV extends GenericOutput {
+public class OutputCSV extends Output {
 
     private final String COMMA_DELIMITER = ",";
     private final String NEW_LINE_SEPARATOR = "\n";

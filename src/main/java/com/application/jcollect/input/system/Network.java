@@ -6,7 +6,7 @@
  */
 package com.application.jcollect.input.system;
 
-import com.application.jcollect.input.GenericInput;
+import com.application.jcollect.input.Input;
 import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
 import oshi.SystemInfo;
@@ -16,7 +16,7 @@ import oshi.hardware.NetworkIF;
  *
  * @author enrico
  */
-public class Network extends GenericInput {
+public class Network extends Input {
 
     private final String metricName = "Network";
     private final SystemInfo si;

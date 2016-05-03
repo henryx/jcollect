@@ -6,7 +6,7 @@
  */
 package com.application.jcollect.input.system;
 
-import com.application.jcollect.input.GenericInput;
+import com.application.jcollect.input.Input;
 import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
 import oshi.SystemInfo;
@@ -16,7 +16,7 @@ import oshi.hardware.GlobalMemory;
  *
  * @author enrico
  */
-public class Memory extends GenericInput {
+public class Memory extends Input {
 
     private final GlobalMemory mem;
     private final String metricName = "Memory";

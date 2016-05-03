@@ -13,13 +13,13 @@ import org.ini4j.Profile.Section;
  *
  * @author ebianchi
  */
-public abstract class GenericOutput {
+public abstract class Output {
 
     protected LinkedHashMap<String, String> data;
     protected String name;
     protected final Section section;
 
-    public GenericOutput(Section section) {
+    public Output(Section section) {
         this.section = section;
     }
 
