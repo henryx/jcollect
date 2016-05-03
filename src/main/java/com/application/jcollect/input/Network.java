@@ -30,16 +30,16 @@ public class Network extends GenericInput {
     public void run() {
         LinkedHashMap<String, String> data;
 
-        data = new LinkedHashMap<>();
-
         for (NetworkIF netIF : this.si.getHardware().getNetworkIFs()) {
+            data = new LinkedHashMap<>();
+
             data.put("name", netIF.getName());
             data.put("mac", netIF.getMacaddr());
             data.put("bytessent", Long.toString(netIF.getBytesSent()));
             data.put("bytesrecv", Long.toString(netIF.getBytesRecv()));
             data.put("packetssent", Long.toString(netIF.getPacketsSent()));
             data.put("packetsrecv", Long.toString(netIF.getPacketsRecv()));
-            
+
             this.write(this.metricName, data);
         }
     }
