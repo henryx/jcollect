@@ -31,6 +31,7 @@ public class Manager {
             put("cpu", "com.application.jcollect.input.system.Cpu");
             put("memory", "com.application.jcollect.input.system.Memory");
             put("network", "com.application.jcollect.input.system.Network");
+            put("disk", "com.application.jcollect.input.system.Disk");
         }
     };
 
