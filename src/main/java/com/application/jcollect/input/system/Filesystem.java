@@ -7,7 +7,9 @@
 package com.application.jcollect.input.system;
 
 import com.application.jcollect.input.Input;
+import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
+import oshi.software.os.OSFileStore;
 
 /**
  *
@@ -16,14 +18,26 @@ import org.ini4j.Profile.Section;
 public class Filesystem extends Input {
 
     private final String metricName = "Filesystem";
-    
+
     public Filesystem(Section section) {
         super(section);
     }
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        LinkedHashMap<String, String> data;
+
+        for (OSFileStore store : this.si.getHardware().getFileStores()) {
+            if (!store.getType().contains("nfs")) {
+                data = new LinkedHashMap<>();
+                data.put("name", store.getName());
+                data.put("type", store.getType());
+                data.put("size", Long.toString(store.getTotalSpace()));
+                data.put("used", Long.toString(store.getUsableSpace()));
+                data.put("free", Long.toString(store.getTotalSpace() - store.getUsableSpace()));
+
+                this.write(this.metricName, data);
+            }
+        }
     }
-    
 }
