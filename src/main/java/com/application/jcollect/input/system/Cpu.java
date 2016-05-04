@@ -51,6 +51,13 @@ public class Cpu extends Input {
         return loads;
     }
 
+    private long getCpuIoWait() {
+        long iowait;
+
+        iowait = this.cpu.getSystemIOWaitTicks();
+        return iowait;
+    }
+
     @Override
     public void run() {
         LinkedHashMap<String, String> data;
@@ -71,6 +78,7 @@ public class Cpu extends Input {
         } else {
             data.put("cpu", "");
         }
+        data.put("iowait",  Long.toString(this.getCpuIoWait()));
 
         data.put("load1", Double.toString(avgloads[0]));
         data.put("load5", Double.toString(avgloads[1]));
