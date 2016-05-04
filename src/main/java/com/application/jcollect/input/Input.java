@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.ini4j.Profile.Section;
+import oshi.SystemInfo;
 
 /**
  *
@@ -22,10 +23,12 @@ public abstract class Input implements Runnable {
 
     private String hostname;
     protected final Section section;
+    protected final SystemInfo si;
     protected Output output;
 
     public Input(Section section) {
         this.section = section;
+        this.si = new SystemInfo();
     }
 
     public void write(String section, LinkedHashMap<String, String> data) {

@@ -9,7 +9,6 @@ package com.application.jcollect.input.system;
 import com.application.jcollect.input.Input;
 import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
-import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
 /**
@@ -24,10 +23,7 @@ public class Memory extends Input {
     public Memory(Section section) {
         super(section);
 
-        SystemInfo si;
-
-        si = new SystemInfo();
-        this.mem = si.getHardware().getMemory();
+        this.mem = this.si.getHardware().getMemory();
     }
 
     @Override

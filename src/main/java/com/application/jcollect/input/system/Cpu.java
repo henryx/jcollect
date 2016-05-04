@@ -9,7 +9,6 @@ package com.application.jcollect.input.system;
 import com.application.jcollect.input.Input;
 import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
-import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 
 /**
@@ -24,10 +23,7 @@ public class Cpu extends Input {
     public Cpu(Section section) {
         super(section);
 
-        SystemInfo si;
-
-        si = new SystemInfo();
-        this.cpu = si.getHardware().getProcessor();
+        this.cpu = this.si.getHardware().getProcessor();
     }
 
     private double[] getCpuLoadAverage() {

@@ -8,7 +8,6 @@ package com.application.jcollect.input.system;
 
 import com.application.jcollect.input.Input;
 import org.ini4j.Profile.Section;
-import oshi.SystemInfo;
 
 /**
  *
@@ -17,8 +16,7 @@ import oshi.SystemInfo;
 public class Filesystem extends Input {
 
     private final String metricName = "Filesystem";
-    private SystemInfo si;
-
+    
     public Filesystem(Section section) {
         super(section);
     }

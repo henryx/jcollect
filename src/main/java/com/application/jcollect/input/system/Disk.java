@@ -9,7 +9,6 @@ package com.application.jcollect.input.system;
 import com.application.jcollect.input.Input;
 import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
-import oshi.SystemInfo;
 import oshi.hardware.HWDiskStore;
 
 /**
@@ -19,12 +18,9 @@ import oshi.hardware.HWDiskStore;
 public class Disk extends Input {
 
     private final String metricName = "Disk";
-    private SystemInfo si;
 
     public Disk(Section section) {
         super(section);
-
-        si = new SystemInfo();
     }
 
     @Override
