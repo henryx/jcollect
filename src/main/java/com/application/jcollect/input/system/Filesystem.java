@@ -31,6 +31,7 @@ public class Filesystem extends Input {
             if (!store.getType().contains("nfs")) {
                 data = new LinkedHashMap<>();
                 data.put("name", store.getName());
+                data.put("mount", store.getMount());
                 data.put("type", store.getType());
                 data.put("size", Long.toString(store.getTotalSpace()));
                 data.put("used", Long.toString(store.getUsableSpace()));
