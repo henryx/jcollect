@@ -7,6 +7,8 @@
 package com.application.jcollect.output.database;
 
 import com.application.jcollect.output.Output;
+import org.influxdb.InfluxDB;
+import org.influxdb.InfluxDBFactory;
 import org.ini4j.Profile.Section;
 
 /**
@@ -15,8 +17,19 @@ import org.ini4j.Profile.Section;
  */
 public class OutputInfluxDB extends Output {
 
+    private final InfluxDB influxDB;
+    private final String dbName;
+
     public OutputInfluxDB(Section section) {
         super(section);
+
+        String URL = "http://" + this.section.get("host") + ":" + this.section.get("port");
+        
+        this.dbName = this.section.get("database");
+        this.influxDB = InfluxDBFactory.connect(URL, this.section.getOrDefault("user", ""),
+                this.section.getOrDefault("password", ""));
+        
+        this.influxDB.createDatabase(this.dbName);
     }
 
     @Override
