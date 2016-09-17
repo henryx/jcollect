@@ -50,7 +50,7 @@ public class Cpu extends Input {
     private long getCpuIoWait() {
         long iowait;
 
-        iowait = this.cpu.getSystemIOWaitTicks();
+        iowait = this.cpu.getSystemCpuLoadTicks()[4];
         return iowait;
     }
 
