@@ -26,7 +26,7 @@ public class Main {
     private Boolean help = Boolean.FALSE;
 
     @Parameter(names = {"-V", "--version"}, help = true, description = "Get version of the software")
-    private final Boolean version = Boolean.FALSE;
+    private Boolean version = Boolean.FALSE;
     
     @Parameter(names = {"-c", "--cfg"}, description = "Set the configuration file", required = true)
     private String cfg;
