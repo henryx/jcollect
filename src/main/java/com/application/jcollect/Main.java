@@ -62,8 +62,9 @@ public class Main {
 
         app = new Main();
         try {
-            cmd = new JCommander(app, args);
+            cmd = JCommander.newBuilder().addObject(app).build();
             cmd.setProgramName("JCollect");
+            cmd.parse(args);
 
             try {
                 if (app.getHelp()) {
