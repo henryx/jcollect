@@ -29,6 +29,9 @@ public class Disk extends Input {
 
         for (HWDiskStore store : this.si.getHardware().getDiskStores()) {
             data = new LinkedHashMap<>();
+            data.put("hostname", this.getHostname());
+            data.put("os", this.getOs());
+
             data.put("name", store.getName());
             data.put("reads", Long.toString(store.getReads()));
             data.put("writes", Long.toString(store.getWrites()));

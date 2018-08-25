@@ -30,6 +30,8 @@ public class Network extends Input {
         for (NetworkIF netIF : this.si.getHardware().getNetworkIFs()) {
             data = new LinkedHashMap<>();
 
+            data.put("hostname", this.getHostname());
+            data.put("os", this.getOs());
             data.put("name", netIF.getName());
             data.put("mac", netIF.getMacaddr());
             data.put("bytessent", Long.toString(netIF.getBytesSent()));

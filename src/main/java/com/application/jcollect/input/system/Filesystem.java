@@ -30,6 +30,8 @@ public class Filesystem extends Input {
         for (OSFileStore store : this.si.getOperatingSystem().getFileSystem().getFileStores()) {
             if (!store.getType().contains("nfs")) {
                 data = new LinkedHashMap<>();
+                data.put("hostname", this.getHostname());
+                data.put("os", this.getOs());
                 data.put("volume", store.getVolume());
                 data.put("mount", store.getMount());
                 data.put("type", store.getType());
