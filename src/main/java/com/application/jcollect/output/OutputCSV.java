@@ -6,18 +6,19 @@
  */
 package com.application.jcollect.output;
 
+import org.ini4j.Profile.Section;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.ini4j.Profile.Section;
 
 /**
- *
  * @author enrico.bianchi@gmail.com
  */
 public class OutputCSV extends Output {
@@ -31,16 +32,17 @@ public class OutputCSV extends Output {
 
     @Override
     public void write() {
-        String fileName;
+        LocalDateTime now;
         Path path;
+        String fileName;
         boolean header;
-        long now;
 
-        now = System.currentTimeMillis() / 1000L;
+        now = LocalDateTime.now();
+
         fileName = this.section.get("path") + File.separator + this.name.toLowerCase() + ".csv";
         path = Paths.get(fileName);
         header = !Files.exists(path);
-        
+
         try (FileWriter writer = new FileWriter(fileName, true)) {
             if (header) {
                 writer.append("date");
@@ -52,7 +54,7 @@ public class OutputCSV extends Output {
                 writer.append(this.NEW_LINE_SEPARATOR);
             }
 
-            writer.append(Long.toString(now));
+            writer.append(now.toString());
             writer.append(this.COMMA_DELIMITER);
             for (String key : this.data.keySet()) {
                 writer.append(this.data.get(key));
