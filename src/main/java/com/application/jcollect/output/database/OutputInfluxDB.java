@@ -12,7 +12,6 @@ import org.influxdb.InfluxDBFactory;
 import org.ini4j.Profile.Section;
 
 /**
- *
  * @author enrico.bianchi@gmail.com
  */
 public class OutputInfluxDB extends Output {
@@ -24,12 +23,14 @@ public class OutputInfluxDB extends Output {
         super(section);
 
         String URL = "http://" + this.section.get("host") + ":" + this.section.get("port");
-        
+
         this.dbName = this.section.get("database");
         this.influxDB = InfluxDBFactory.connect(URL, this.section.getOrDefault("user", ""),
                 this.section.getOrDefault("password", ""));
-        
-        this.influxDB.createDatabase(this.dbName);
+
+        if (!this.influxDB.describeDatabases().contains(this.dbName)) {
+            this.influxDB.createDatabase(this.dbName);
+        }
     }
 
     @Override
