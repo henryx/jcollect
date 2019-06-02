@@ -10,6 +10,7 @@ import com.application.jcollect.input.Input;
 import java.util.LinkedHashMap;
 import org.ini4j.Profile.Section;
 import oshi.hardware.CentralProcessor;
+import oshi.hardware.CentralProcessor.TickType;
 
 /**
  *
@@ -48,10 +49,10 @@ public class Cpu extends Input {
     }
 
     private long getCpuIoWait() {
-        long iowait;
+        long[] iowait;
 
-        iowait = this.cpu.getSystemCpuLoadTicks()[4];
-        return iowait;
+        iowait = this.cpu.getSystemCpuLoadTicks();
+        return iowait[TickType.IOWAIT.getIndex()];
     }
 
     @Override
@@ -74,7 +75,7 @@ public class Cpu extends Input {
         } else {
             data.put("cpu", "");
         }
-        data.put("iowait",  Long.toString(this.getCpuIoWait()));
+        data.put("iowait", Long.toString(this.getCpuIoWait()));
 
         data.put("load1", Double.toString(avgloads[0]));
         data.put("load5", Double.toString(avgloads[1]));
