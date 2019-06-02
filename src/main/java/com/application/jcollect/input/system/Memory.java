@@ -31,6 +31,8 @@ public class Memory extends Input {
         LinkedHashMap<String, String> data;
 
         data = new LinkedHashMap<>();
+        data.put("hostname", this.getHostname());
+        data.put("os", this.getOs());
         data.put("total", Long.toString(this.mem.getTotal()));
         data.put("available", Long.toString(this.mem.getAvailable()));
         data.put("swaptotal", Long.toString(this.mem.getSwapTotal()));
