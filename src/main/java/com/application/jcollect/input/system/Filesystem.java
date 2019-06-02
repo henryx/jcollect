@@ -31,10 +31,12 @@ public class Filesystem extends Input {
     public void run() {
         LinkedHashMap<String, String> data;
 
-        for (OSFileStore store : this.fs.getFileStores()) {
+        for (OSFileStore store : this.si.getOperatingSystem().getFileSystem().getFileStores()) {
             if (!store.getType().contains("nfs")) {
                 data = new LinkedHashMap<>();
-                data.put("name", store.getName());
+                data.put("hostname", this.getHostname());
+                data.put("os", this.getOs());
+                data.put("volume", store.getVolume());
                 data.put("mount", store.getMount());
                 data.put("type", store.getType());
                 data.put("size", Long.toString(store.getTotalSpace()));
