@@ -82,10 +82,5 @@
             <artifactId>oshi-core</artifactId>
             <version>3.13.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.oshi</groupId>
-            <artifactId>oshi-json</artifactId>
-            <version>3.13.2</version>
-        </dependency>
     </dependencies>
 </project>
