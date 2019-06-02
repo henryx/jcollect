@@ -24,7 +24,7 @@ public abstract class Input implements Runnable {
     private String hostname;
     protected final Section section;
     protected final SystemInfo si;
-    protected Output output;
+    private Output output;
 
     public Input(Section section) {
         this.section = section;
