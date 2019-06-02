@@ -15,6 +15,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.management.AttributeNotFoundException;
+
+import com.application.jcollect.output.database.OutputInfluxDB;
 import org.ini4j.Profile.Section;
 import org.ini4j.Wini;
 
@@ -64,6 +66,8 @@ public class Manager {
         switch (type) {
             case "csv":
                 return new OutputCSV(this.CFG.get("output"));
+            case "influxdb":
+                return new OutputInfluxDB(this.CFG.get("output"));
             default:
                 throw new AttributeNotFoundException("Type not valid: " + type);
         }
