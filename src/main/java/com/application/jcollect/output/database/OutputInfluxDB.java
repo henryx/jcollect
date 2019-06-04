@@ -22,15 +22,35 @@ public class OutputInfluxDB extends Output {
     public OutputInfluxDB(Section section) {
         super(section);
 
-        String URL = "http://" + this.section.get("host") + ":" + this.section.get("port");
+        String url;
+        String user;
+        String password;
+
+        url = "http://" + this.section.get("host") + ":" + this.section.get("port");
+        user = this.section.getOrDefault("user", "");
+        password = this.section.getOrDefault("password", "");
 
         this.dbName = this.section.get("database");
-        this.influxDB = InfluxDBFactory.connect(URL, this.section.getOrDefault("user", ""),
-                this.section.getOrDefault("password", ""));
 
-        if (!this.influxDB.describeDatabases().contains(this.dbName)) {
-            this.influxDB.createDatabase(this.dbName);
+        if (user.equals("")) {
+            this.influxDB = InfluxDBFactory.connect(url);
+        } else {
+            this.influxDB = InfluxDBFactory.connect(url, user, password);
         }
+
+        if (!this.isDatabaseExists()) {
+            this.createDatabase();
+        }
+    }
+
+    private Boolean isDatabaseExists() {
+        // TODO: check if database exists
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    private void createDatabase() {
+        // TODO: create database
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
