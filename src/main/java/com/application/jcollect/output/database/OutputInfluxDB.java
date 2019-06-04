@@ -11,10 +11,13 @@ import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.InfluxDBIOException;
 import org.influxdb.dto.Pong;
+import org.influxdb.dto.Query;
+import org.influxdb.dto.QueryResult;
 import org.ini4j.Profile.Section;
 
 import java.net.NoRouteToHostException;
 import java.net.UnknownHostException;
+import java.util.List;
 
 /**
  * @author enrico.bianchi@gmail.com
@@ -58,8 +61,25 @@ public class OutputInfluxDB extends Output {
     }
 
     private Boolean isDatabaseExists() {
-        // TODO: check if database exists
-        throw new UnsupportedOperationException("Not supported yet.");
+        QueryResult results;
+        Query query;
+
+        query = new Query("SHOW DATABASES");
+        results = this.influxDB.query(query);
+
+        for (QueryResult.Result res : results.getResults()) {
+            for (QueryResult.Series series: res.getSeries()) {
+                for (List<Object> values: series.getValues()) {
+                    for (Object value : values) {
+                        if (value.equals(this.dbName)) {
+                            return Boolean.TRUE;
+                        }
+                    }
+                }
+            }
+        }
+
+        return Boolean.FALSE;
     }
 
     private void createDatabase() {
