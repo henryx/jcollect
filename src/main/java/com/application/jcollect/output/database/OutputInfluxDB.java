@@ -11,6 +11,7 @@ import org.influxdb.BatchOptions;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.InfluxDBIOException;
+import org.influxdb.dto.Point;
 import org.influxdb.dto.Pong;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
@@ -19,6 +20,7 @@ import org.ini4j.Profile.Section;
 import java.net.NoRouteToHostException;
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author enrico.bianchi@gmail.com
@@ -95,6 +97,16 @@ public class OutputInfluxDB extends Output {
 
     @Override
     public void write() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Point.Builder point;
+
+        point = Point.measurement(this.name.toLowerCase());
+
+        for (String key : this.data.keySet()) {
+            point.addField(key, this.data.get(key));
+        }
+
+        point.time(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+        this.influxDB.write(point.build());
     }
 }
