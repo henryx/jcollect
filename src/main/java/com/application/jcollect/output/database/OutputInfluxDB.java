@@ -83,8 +83,10 @@ public class OutputInfluxDB extends Output {
     }
 
     private void createDatabase() {
-        // TODO: create database
-        throw new UnsupportedOperationException("Not supported yet.");
+        Query query;
+
+        query = new Query("CREATE DATABASE " + this.dbName);
+        this.influxDB.query(query);
     }
 
     @Override
