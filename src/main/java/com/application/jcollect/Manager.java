@@ -10,6 +10,8 @@ import com.application.jcollect.input.Input;
 import com.application.jcollect.output.Output;
 import com.application.jcollect.output.OutputCSV;
 import java.lang.reflect.Constructor;
+import java.net.NoRouteToHostException;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -38,14 +40,14 @@ public class Manager {
         }
     };
 
-    public Manager(Wini cfg) throws ReflectiveOperationException, AttributeNotFoundException {
+    public Manager(Wini cfg) throws ReflectiveOperationException, AttributeNotFoundException, UnknownHostException, NoRouteToHostException {
         this.CFG = cfg;
         this.ENABLEDINPUTS = new HashMap<>();
 
         this.init();
     }
 
-    private void init() throws ReflectiveOperationException, AttributeNotFoundException {
+    private void init() throws ReflectiveOperationException, AttributeNotFoundException, UnknownHostException, NoRouteToHostException {
         for (String section : this.CFG.keySet()) {
             if (!(section.equals("general") || section.equals("output"))
                     && this.CFG.get(section, "enabled", boolean.class)) {
@@ -59,7 +61,7 @@ public class Manager {
         }
     }
 
-    private Output computeOutput() throws AttributeNotFoundException {
+    private Output computeOutput() throws AttributeNotFoundException, UnknownHostException, NoRouteToHostException {
         String type;
 
         type = this.CFG.get("output", "type");

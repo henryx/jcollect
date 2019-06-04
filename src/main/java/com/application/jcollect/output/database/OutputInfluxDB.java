@@ -9,7 +9,12 @@ package com.application.jcollect.output.database;
 import com.application.jcollect.output.Output;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
+import org.influxdb.InfluxDBIOException;
+import org.influxdb.dto.Pong;
 import org.ini4j.Profile.Section;
+
+import java.net.NoRouteToHostException;
+import java.net.UnknownHostException;
 
 /**
  * @author enrico.bianchi@gmail.com
@@ -19,7 +24,7 @@ public class OutputInfluxDB extends Output {
     private final InfluxDB influxDB;
     private final String dbName;
 
-    public OutputInfluxDB(Section section) {
+    public OutputInfluxDB(Section section) throws UnknownHostException, NoRouteToHostException {
         super(section);
 
         String url;
@@ -32,10 +37,19 @@ public class OutputInfluxDB extends Output {
 
         this.dbName = this.section.get("database");
 
-        if (user.equals("")) {
-            this.influxDB = InfluxDBFactory.connect(url);
-        } else {
-            this.influxDB = InfluxDBFactory.connect(url, user, password);
+        try {
+            if (user.equals("")) {
+                this.influxDB = InfluxDBFactory.connect(url);
+            } else {
+                this.influxDB = InfluxDBFactory.connect(url, user, password);
+            }
+
+            Pong pong = this.influxDB.ping();
+            if (!pong.isGood()) {
+                throw new UnknownHostException("Cannot connect to " + url);
+            }
+        } catch (InfluxDBIOException ex) {
+            throw new NoRouteToHostException(ex.getMessage());
         }
 
         if (!this.isDatabaseExists()) {

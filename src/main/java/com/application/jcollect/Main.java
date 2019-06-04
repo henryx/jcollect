@@ -9,15 +9,18 @@ package com.application.jcollect;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.NoRouteToHostException;
+import java.net.UnknownHostException;
 import javax.management.AttributeNotFoundException;
+
 import org.ini4j.Wini;
 
 /**
- *
  * @author enrico.bianchi@gmail.com
  */
 public class Main {
@@ -27,7 +30,7 @@ public class Main {
 
     @Parameter(names = {"-V", "--version"}, help = true, description = "Get version of the software")
     private Boolean version = Boolean.FALSE;
-    
+
     @Parameter(names = {"-c", "--cfg"}, description = "Set the configuration file", required = true)
     private String cfg;
 
@@ -39,12 +42,12 @@ public class Main {
     public Boolean getHelp() {
         return this.help;
     }
-    
+
     public Boolean getVersion() {
         return this.version;
     }
 
-    public void go() throws FileNotFoundException, IOException, InterruptedException, ReflectiveOperationException, AttributeNotFoundException {
+    public void go() throws FileNotFoundException, UnknownHostException, NoRouteToHostException, IOException, InterruptedException, ReflectiveOperationException, AttributeNotFoundException {
         Manager manager;
         Wini cfg;
 
@@ -70,17 +73,20 @@ public class Main {
                     cmd.usage();
                     System.exit(0);
                 }
-                
-                if (app.getVersion()){
+
+                if (app.getVersion()) {
                     System.out.println("JCollect " + Main.VERSION);
                     System.exit(0);
                 }
-                
+
                 app.go();
             } catch (FileNotFoundException ex) {
                 System.err.println("Configuration file not found");
                 cmd.usage();
                 System.exit(1);
+            } catch (UnknownHostException | NoRouteToHostException ex) {
+                System.err.print("Error when connecting to database: " + ex.getMessage());
+                System.exit(7);
             } catch (IOException ex) {
                 System.err.println("Error when opening configuration file");
                 System.exit(2);
