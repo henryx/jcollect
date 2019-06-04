@@ -7,6 +7,7 @@
 package com.application.jcollect.output.database;
 
 import com.application.jcollect.output.Output;
+import org.influxdb.BatchOptions;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.InfluxDBIOException;
@@ -58,6 +59,9 @@ public class OutputInfluxDB extends Output {
         if (!this.isDatabaseExists()) {
             this.createDatabase();
         }
+
+        this.influxDB.setDatabase(this.dbName);
+        this.influxDB.enableBatch(BatchOptions.DEFAULTS);
     }
 
     private Boolean isDatabaseExists() {
