@@ -35,6 +35,7 @@ public class Disk extends Input {
             data.put("name", store.getName());
             data.put("reads", Long.toString(store.getReads()));
             data.put("writes", Long.toString(store.getWrites()));
+            data.put("ioqueue", Long.toString(store.getCurrentQueueLength()));
 
             this.write(this.metricName, data);
         }
