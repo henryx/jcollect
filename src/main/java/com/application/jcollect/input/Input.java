@@ -31,7 +31,7 @@ public abstract class Input implements Runnable {
         this.si = new SystemInfo();
     }
 
-    public void write(String section, LinkedHashMap<String, String> data) {
+    public void write(String section, LinkedHashMap<String, Object> data) {
         this.output.setName(section);
         this.output.setData(data);
         this.output.write();

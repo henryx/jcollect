@@ -25,7 +25,7 @@ public class Network extends Input {
 
     @Override
     public void run() {
-        LinkedHashMap<String, String> data;
+        LinkedHashMap<String, Object> data;
 
         for (NetworkIF netIF : this.si.getHardware().getNetworkIFs()) {
             data = new LinkedHashMap<>();
@@ -34,10 +34,10 @@ public class Network extends Input {
             data.put("os", this.getOs());
             data.put("name", netIF.getName());
             data.put("mac", netIF.getMacaddr());
-            data.put("bytessent", Long.toString(netIF.getBytesSent()));
-            data.put("bytesrecv", Long.toString(netIF.getBytesRecv()));
-            data.put("packetssent", Long.toString(netIF.getPacketsSent()));
-            data.put("packetsrecv", Long.toString(netIF.getPacketsRecv()));
+            data.put("bytessent", netIF.getBytesSent());
+            data.put("bytesrecv", netIF.getBytesRecv());
+            data.put("packetssent", netIF.getPacketsSent());
+            data.put("packetsrecv", netIF.getPacketsRecv());
 
             this.write(this.metricName, data);
         }

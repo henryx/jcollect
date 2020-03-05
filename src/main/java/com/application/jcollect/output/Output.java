@@ -15,7 +15,7 @@ import org.ini4j.Profile.Section;
  */
 public abstract class Output {
 
-    protected LinkedHashMap<String, String> data;
+    protected LinkedHashMap<String, Object> data;
     protected String name;
     protected final Section section;
 
@@ -27,7 +27,7 @@ public abstract class Output {
         this.name = name;
     }
 
-    public void setData(LinkedHashMap<String, String> data) {
+    public void setData(LinkedHashMap<String, Object> data) {
         this.data = data;
     }
 

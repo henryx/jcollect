@@ -25,7 +25,7 @@ public class Disk extends Input {
 
     @Override
     public void run() {
-        LinkedHashMap<String, String> data;
+        LinkedHashMap<String, Object> data;
 
         for (HWDiskStore store : this.si.getHardware().getDiskStores()) {
             data = new LinkedHashMap<>();
@@ -33,9 +33,9 @@ public class Disk extends Input {
             data.put("os", this.getOs());
 
             data.put("name", store.getName());
-            data.put("reads", Long.toString(store.getReads()));
-            data.put("writes", Long.toString(store.getWrites()));
-            data.put("ioqueue", Long.toString(store.getCurrentQueueLength()));
+            data.put("reads", store.getReads());
+            data.put("writes", store.getWrites());
+            data.put("ioqueue", store.getCurrentQueueLength());
 
             this.write(this.metricName, data);
         }

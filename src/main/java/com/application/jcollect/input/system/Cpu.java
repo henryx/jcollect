@@ -63,7 +63,7 @@ public class Cpu extends Input {
 
     @Override
     public void run() {
-        LinkedHashMap<String, String> data;
+        LinkedHashMap<String, Object> data;
         double[] cpuloads, avgloads;
 
         data = new LinkedHashMap<>();
@@ -73,19 +73,19 @@ public class Cpu extends Input {
         data.put("hostname", this.getHostname());
         data.put("os", this.getOs());
         for (int i = 0; i < cpuloads.length; i++) {
-            data.put("cpu" + (i + 1), Double.toString(cpuloads[i] * 100));
+            data.put(String.format("cpu%d", (i + 1)), cpuloads[i] * 100);
         }
 
         if (this.section.get("aggregate", boolean.class)) {
-            data.put("cpu", Double.toString(this.getCpuLoad()));
+            data.put("cpu", this.getCpuLoad());
         } else {
             data.put("cpu", "");
         }
-        data.put("iowait", Long.toString(this.getCpuIoWait()));
+        data.put("iowait", this.getCpuIoWait());
 
-        data.put("load1", Double.toString(avgloads[0]));
-        data.put("load5", Double.toString(avgloads[1]));
-        data.put("load15", Double.toString(avgloads[2]));
+        data.put("load1", avgloads[0]);
+        data.put("load5", avgloads[1]);
+        data.put("load15", avgloads[2]);
 
         this.write(this.metricName, data);
     }

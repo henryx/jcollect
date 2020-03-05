@@ -102,7 +102,17 @@ public class OutputInfluxDB extends Output {
         point = Point.measurement(this.name.toLowerCase());
 
         for (String key : this.data.keySet()) {
-            point.addField(key, this.data.get(key));
+            if (this.data.get(key) instanceof Boolean) {
+                point.addField(key, (Boolean)this.data.get(key));
+            } else if (this.data.get(key) instanceof Long) {
+                point.addField(key, (Long) this.data.get(key));
+            } else if (this.data.get(key) instanceof Double) {
+                point.addField(key, (Double) this.data.get(key));
+            } else if (this.data.get(key) instanceof Number) {
+                point.addField(key, (Number) this.data.get(key));
+            } else {
+                point.addField(key, (String) this.data.get(key));
+            }
         }
 
         point.time(System.currentTimeMillis(), TimeUnit.MILLISECONDS);

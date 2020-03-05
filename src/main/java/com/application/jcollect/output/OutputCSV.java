@@ -56,7 +56,7 @@ public class OutputCSV extends Output {
             writer.append(now.toString());
             writer.append(this.COMMA_DELIMITER);
             for (String key : this.data.keySet()) {
-                writer.append(this.data.get(key));
+                writer.append(String.format("%s",this.data.get(key)));
                 writer.append(this.COMMA_DELIMITER);
             }
             writer.append(this.NEW_LINE_SEPARATOR);

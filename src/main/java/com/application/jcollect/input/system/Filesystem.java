@@ -29,7 +29,7 @@ public class Filesystem extends Input {
 
     @Override
     public void run() {
-        LinkedHashMap<String, String> data;
+        LinkedHashMap<String, Object> data;
 
         for (OSFileStore store : this.si.getOperatingSystem().getFileSystem().getFileStores()) {
             if (!store.getType().contains("nfs")) {
@@ -39,9 +39,9 @@ public class Filesystem extends Input {
                 data.put("volume", store.getVolume());
                 data.put("mount", store.getMount());
                 data.put("type", store.getType());
-                data.put("size", Long.toString(store.getTotalSpace()));
-                data.put("used", Long.toString(store.getUsableSpace()));
-                data.put("free", Long.toString(store.getTotalSpace() - store.getUsableSpace()));
+                data.put("size", store.getTotalSpace());
+                data.put("used", store.getUsableSpace());
+                data.put("free", (store.getTotalSpace() - store.getUsableSpace()));
 
                 this.write(this.metricName, data);
             }

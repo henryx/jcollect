@@ -28,15 +28,15 @@ public class Memory extends Input {
 
     @Override
     public void run() {
-        LinkedHashMap<String, String> data;
+        LinkedHashMap<String, Object> data;
 
         data = new LinkedHashMap<>();
         data.put("hostname", this.getHostname());
         data.put("os", this.getOs());
-        data.put("total", Long.toString(this.mem.getTotal()));
-        data.put("available", Long.toString(this.mem.getAvailable()));
-        data.put("swaptotal", Long.toString(this.mem.getVirtualMemory().getSwapTotal()));
-        data.put("swapused", Long.toString(this.mem.getVirtualMemory().getSwapUsed()));
+        data.put("total", this.mem.getTotal());
+        data.put("available", this.mem.getAvailable());
+        data.put("swaptotal", this.mem.getVirtualMemory().getSwapTotal());
+        data.put("swapused", this.mem.getVirtualMemory().getSwapUsed());
 
         this.write(this.metricName, data);
     }
