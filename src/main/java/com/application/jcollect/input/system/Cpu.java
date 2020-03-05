@@ -7,13 +7,15 @@
 package com.application.jcollect.input.system;
 
 import com.application.jcollect.input.Input;
-import java.util.LinkedHashMap;
+import com.sun.management.OperatingSystemMXBean;
 import org.ini4j.Profile.Section;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.CentralProcessor.TickType;
 
+import java.lang.management.ManagementFactory;
+import java.util.LinkedHashMap;
+
 /**
- *
  * @author enrico.bianchi@gmail.com
  */
 public class Cpu extends Input {
@@ -37,7 +39,8 @@ public class Cpu extends Input {
     private double getCpuLoad() {
         double load;
 
-        load = this.cpu.getSystemCpuLoad() * 100;
+        OperatingSystemMXBean beam = (com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+        load = beam.getSystemCpuLoad() * 100;
         return load;
     }
 
