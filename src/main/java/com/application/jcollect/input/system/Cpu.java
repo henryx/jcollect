@@ -28,6 +28,7 @@ public class Cpu extends Input {
         super(section);
 
         this.cpu = this.si.getHardware().getProcessor();
+        this.prevLoadTicks = this.cpu.getProcessorCpuLoadTicks();
     }
 
     private double[] getCpuLoadAverage() {
@@ -48,8 +49,8 @@ public class Cpu extends Input {
     private double[] getCpuLoads() {
         double[] loads;
 
-        this.prevLoadTicks = this.cpu.getProcessorCpuLoadTicks();
         loads = this.cpu.getProcessorCpuLoadBetweenTicks(this.prevLoadTicks);
+        this.prevLoadTicks = this.cpu.getProcessorCpuLoadTicks();
 
         return loads;
     }
