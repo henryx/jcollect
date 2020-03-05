@@ -22,6 +22,7 @@ public class Cpu extends Input {
 
     private final CentralProcessor cpu;
     private final String metricName = "Cpu";
+    private long[][] prevLoadTicks;
 
     public Cpu(Section section) {
         super(section);
@@ -47,7 +48,9 @@ public class Cpu extends Input {
     private double[] getCpuLoads() {
         double[] loads;
 
-        loads = this.cpu.getProcessorCpuLoadBetweenTicks();
+        this.prevLoadTicks = this.cpu.getProcessorCpuLoadTicks();
+        loads = this.cpu.getProcessorCpuLoadBetweenTicks(this.prevLoadTicks);
+
         return loads;
     }
 

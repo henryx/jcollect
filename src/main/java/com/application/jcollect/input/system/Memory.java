@@ -35,8 +35,8 @@ public class Memory extends Input {
         data.put("os", this.getOs());
         data.put("total", Long.toString(this.mem.getTotal()));
         data.put("available", Long.toString(this.mem.getAvailable()));
-        data.put("swaptotal", Long.toString(this.mem.getSwapTotal()));
-        data.put("swapused", Long.toString(this.mem.getSwapUsed()));
+        data.put("swaptotal", Long.toString(this.mem.getVirtualMemory().getSwapTotal()));
+        data.put("swapused", Long.toString(this.mem.getVirtualMemory().getSwapUsed()));
 
         this.write(this.metricName, data);
     }
